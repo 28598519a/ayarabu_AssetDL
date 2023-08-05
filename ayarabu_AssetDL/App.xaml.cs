@@ -13,7 +13,6 @@ namespace ayarabu_AssetDL
         public static string Respath = String.Empty;
         public static int TotalCount = 0;
         public static int glocount = 0;
-        public static string ServerURL = "https://cdn.playrr.me/game2.0/en_N/androidr/androidr/";
         public static List<string> log = new List<string>();
     }
 }
