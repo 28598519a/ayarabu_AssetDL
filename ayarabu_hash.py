@@ -1,7 +1,7 @@
 import os
 import urllib.request
 import hashlib
-import UnityPy #requirement 'pip install unitypy==1.6.7.2'
+import UnityPy #requirement 'pip install -U unitypy==1.10.7'
 
 filetype = ['DmmR18Web', 'DmmAndroid']
 ayakashi_cdn_header = f'https://game.ayarabu.com/AssetBundles/{filetype[0]}/'
@@ -26,11 +26,12 @@ def baxor(ba1, ba2):
 def dump_filelist(manifest, output):
     env = UnityPy.load(manifest)
     for o in env.objects:
-        data = o.read()
-        if data.name == 'AssetBundleManifest':
+        if o.type.name == 'AssetBundleManifest':
+            data = o.read_typetree()
             parsed_list = []
-            for key in data.type_tree['AssetBundleNames']:
-                parsed_list.append(data.type_tree['AssetBundleNames'][key])
+            for element in data['AssetBundleNames']:
+                # element = (key, value)
+                parsed_list.append(element[1])
             parsed_list.sort()
             with open(output, 'w', encoding='utf-8-sig') as f:
                 for p in parsed_list:
